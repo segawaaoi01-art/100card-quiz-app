@@ -27,7 +27,7 @@ export default function CharacterView({ type = "top", customMessage, trigger }: 
     }, [type, customMessage, trigger]);
 
     return (
-        <div className="flex items-center w-full max-w-2xl px-4 py-2 mb-4 animate-fade-in">
+        <div className="flex items-center w-full max-w-xl px-2 mb-4 animate-fade-in mx-auto">
             {/* SNS風アイコン (左側) */}
             <div className="relative w-[50px] h-[50px] flex-shrink-0 mr-3">
                 <div className="relative w-[50px] h-[50px] rounded-full border-2 border-white shadow-sm overflow-hidden bg-white/50">

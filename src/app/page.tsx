@@ -687,6 +687,7 @@ export default function Home() {
       { text: targetPoem.shimoNoKu, hiragana: targetPoem.reading.shimo, disabled: false },
       { text: shuffledOthers[0].shimoNoKu, hiragana: shuffledOthers[0].reading.shimo, disabled: false },
       { text: shuffledOthers[1].shimoNoKu, hiragana: shuffledOthers[1].reading.shimo, disabled: false },
+      { text: shuffledOthers[2].shimoNoKu, hiragana: shuffledOthers[2].reading.shimo, disabled: false },
     ].sort(() => 0.5 - Math.random());
     setChoices(initialChoices);
   };
@@ -705,7 +706,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-6 pt-12 relative z-10">
+    <main className="flex min-h-screen flex-col items-center px-4 py-8 md:p-6 md:pt-12 relative z-10">
       {/* ゲームタイトル */}
       <div className="flex flex-col items-center mb-8">
         <div className="border-t-2 border-b-2 border-white/30 py-2 px-6">
@@ -745,7 +746,7 @@ export default function Home() {
             <div className="flex flex-col items-center mb-4">
               <div className="border-t-2 border-b-2 border-[#bce2e8]/50 py-1 px-4">
                 <h2 className="text-[#83ccd2]/60 font-bold text-center text-lg">
-                  百人一首三択クイズ
+                  百人一首四択クイズ
                 </h2>
               </div>
             </div>
@@ -868,28 +869,34 @@ export default function Home() {
             </div>
 
             {/* 楽曲コントロール (再生・停止) */}
-            <div className="flex items-center gap-12 mb-10">
+            <div className="flex items-center gap-8 md:gap-12 mb-10">
               <div className="flex flex-col items-center gap-2">
                 <button
                   onClick={() => selectedMusicIndex && playMusic(selectedMusicIndex)}
-                  className={`w-20 h-20 flex items-center justify-center rounded-full text-white shadow-xl transition-all
-                      ${isPlaying ? "bg-gray-300 scale-95" : "bg-[#89c3eb] hover:scale-110 active:scale-95"}
+                  className={`w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full text-white shadow-lg transition-all
+                      ${isPlaying ? "bg-gray-200 cursor-not-allowed" : "bg-[#89c3eb] hover:bg-[#78b1d6] active:scale-95 active:bg-[#679fc1]"}
                     `}
                   disabled={isPlaying}
+                  aria-label="再生"
                 >
-                  <span className="text-4xl ml-1">▶</span>
+                  <svg className="w-8 h-8 md:w-10 md:h-10 fill-current ml-1" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
                 </button>
               </div>
 
               <div className="flex flex-col items-center gap-2">
                 <button
                   onClick={pauseMusic}
-                  className={`w-20 h-20 flex items-center justify-center rounded-full text-white shadow-xl transition-all
-                      ${!isPlaying ? "bg-gray-300 scale-95" : "bg-[#f6bfbc] hover:scale-110 active:scale-95"}
+                  className={`w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full text-white shadow-lg transition-all
+                      ${!isPlaying ? "bg-gray-200 cursor-not-allowed" : "bg-[#f6bfbc] hover:bg-[#e5adab] active:scale-95 active:bg-[#d49c9a]"}
                     `}
                   disabled={!isPlaying}
+                  aria-label="一時停止"
                 >
-                  <span className="text-4xl">⏹</span>
+                  <svg className="w-8 h-8 md:w-10 md:h-10 fill-current" viewBox="0 0 24 24">
+                    <path d="M6 6h12v12H6z" />
+                  </svg>
                 </button>
               </div>
             </div>
@@ -936,36 +943,26 @@ export default function Home() {
             </div>
 
             {gameState === "CHOICE" && (
-              <div className="mt-6 flex flex-row justify-center gap-4 w-full px-1 flex-wrap">
+              <div className="mt-4 grid grid-cols-2 gap-3 w-full max-w-sm mx-auto px-1">
                 {choices.map((choice, index) => (
                   <button
                     key={index}
                     disabled={choice.disabled}
                     onClick={() => handleChoice(choice.text, choice.hiragana)}
-                    className={`rounded-xl transition-all shadow-md border border-[#333]/30 overflow-hidden mx-auto ${choice.disabled
-                        ? "bg-[#e2e2e2] text-gray-400 cursor-not-allowed opacity-60 border-transparent shadow-none"
-                        : "bg-white text-[#333] hover:bg-[#fdeff2] active:scale-95 hover:border-[#333]/60 hover:shadow-lg hover:-translate-y-1"
+                    className={`rounded-2xl transition-all shadow-md border border-[#333]/20 overflow-hidden aspect-square flex flex-col justify-center items-center p-3 relative ${choice.disabled
+                      ? "bg-gray-100 text-gray-300 cursor-not-allowed opacity-50 border-transparent shadow-none"
+                      : "bg-white text-[#333] hover:bg-[#fdeff2] active:scale-95 active:bg-gray-50 hover:shadow-lg"
                       }`}
-                    style={{
-                      writingMode: "vertical-rl",
-                      display: "flex",
-                      justifyContent: "center", // 文字の塊を左右（縦書きでは上下）中央へ
-                      alignItems: "center",     // 文字の塊を上下（縦書きでは左右）中央へ
-                      padding: "12px",          // 余白を少し小さくして収まりを良くする
-                      overflow: "hidden",       // はみ出しをカット
-                      width: "140px",           // 固定幅で統一
-                      height: "200px",          // 固定高さで統一
-                      fontFamily: "inherit",
-                      fontSize: "clamp(1rem, 4.5vw, 1.3rem)",
-                    }}
                   >
                     <span
+                      className="text-[13px] sm:text-base font-medium tracking-normal"
                       style={{
-                        lineHeight: "1.8",      // 各列の幅を狭まり、はみ出しを解消
-                        letterSpacing: "0.1em", // 文字間を少し詰める
-                        textAlign: "left",      // 縦書きの開始（上揃え）を維持
+                        writingMode: "vertical-rl",
+                        lineHeight: "1.5",
+                        letterSpacing: "0.02em",
+                        textAlign: "left",
                         display: "block",
-                        whiteSpace: "pre",      // 改行を維持
+                        whiteSpace: "pre",
                       }}
                     >
                       {formatVerticalText(choice.hiragana)}
@@ -978,29 +975,19 @@ export default function Home() {
             {gameState === "RESULT" && (
               <div className="w-full flex flex-col items-center">
                 {selectedChoice && (
-                  <div className="mb-6 flex justify-center w-full">
+                  <div className="mb-8 flex justify-center w-full">
                     <div
-                      className="rounded-xl shadow-md border border-[#333]/30 bg-white text-[#333] overflow-hidden mx-auto"
-                      style={{
-                        writingMode: "vertical-rl",
-                        display: "flex",
-                        justifyContent: "center", // 文字の塊を左右（縦書きでは上下）中央へ
-                        alignItems: "center",     // 文字の塊を上下（縦書きでは左右）中央へ
-                        padding: "12px",          // 余白を少し小さくして収まりを良くする
-                        overflow: "hidden",       // はみ出しをカット
-                        width: "140px",           // 固定幅で統一
-                        height: "200px",          // 固定高さで統一
-                        fontFamily: "inherit",
-                        fontSize: "clamp(1rem, 4.5vw, 1.3rem)",
-                      }}
+                      className="rounded-2xl shadow-md border border-[#333]/20 bg-white text-[#333] overflow-hidden aspect-square flex flex-col justify-center items-center p-4 w-full max-w-[180px]"
                     >
                       <span
+                        className="text-sm sm:text-base md:text-lg font-medium tracking-wider"
                         style={{
-                          lineHeight: "1.8",      // 各列の幅を狭まり、はみ出しを解消
-                          letterSpacing: "0.1em", // 文字間を少し詰める
-                          textAlign: "left",      // 縦書きの開始（上揃え）を維持
+                          writingMode: "vertical-rl",
+                          lineHeight: "1.6",
+                          letterSpacing: "0.05em",
+                          textAlign: "left",
                           display: "block",
-                          whiteSpace: "pre",      // 改行を維持
+                          whiteSpace: "pre",
                         }}
                       >
                         {formatVerticalText(selectedChoice.hiragana)}
