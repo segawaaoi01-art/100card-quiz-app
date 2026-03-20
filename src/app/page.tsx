@@ -943,26 +943,28 @@ export default function Home() {
             </div>
 
             {gameState === "CHOICE" && (
-              <div className="mt-4 grid grid-cols-2 gap-3 w-full max-w-sm mx-auto px-1">
+              <div className="mt-4 grid grid-cols-2 gap-2 w-full max-w-sm mx-auto px-1">
                 {choices.map((choice, index) => (
                   <button
                     key={index}
                     disabled={choice.disabled}
                     onClick={() => handleChoice(choice.text, choice.hiragana)}
-                    className={`rounded-2xl transition-all shadow-md border border-[#333]/20 overflow-hidden aspect-square flex flex-col justify-center items-center p-3 relative ${choice.disabled
+                    className={`rounded-2xl transition-all shadow-md border border-[#333]/10 overflow-hidden aspect-square flex flex-col justify-center items-center p-1 sm:p-2 relative ${choice.disabled
                       ? "bg-gray-100 text-gray-300 cursor-not-allowed opacity-50 border-transparent shadow-none"
                       : "bg-white text-[#333] hover:bg-[#fdeff2] active:scale-95 active:bg-gray-50 hover:shadow-lg"
                       }`}
                   >
                     <span
-                      className="text-[13px] sm:text-base font-medium tracking-normal"
+                      className="text-[17px] min-[375px]:text-[19px] sm:text-lg md:text-xl font-bold tracking-tight"
                       style={{
                         writingMode: "vertical-rl",
-                        lineHeight: "1.5",
-                        letterSpacing: "0.02em",
+                        lineHeight: "1.4",
+                        letterSpacing: "-0.02em",
                         textAlign: "left",
                         display: "block",
                         whiteSpace: "pre",
+                        wordBreak: "keep-all",
+                        overflowWrap: "anywhere"
                       }}
                     >
                       {formatVerticalText(choice.hiragana)}
@@ -977,17 +979,19 @@ export default function Home() {
                 {selectedChoice && (
                   <div className="mb-8 flex justify-center w-full">
                     <div
-                      className="rounded-2xl shadow-md border border-[#333]/20 bg-white text-[#333] overflow-hidden aspect-square flex flex-col justify-center items-center p-4 w-full max-w-[180px]"
+                      className="rounded-2xl shadow-md border border-[#333]/10 bg-white text-[#333] overflow-hidden aspect-square flex flex-col justify-center items-center p-2 w-full max-w-[180px]"
                     >
                       <span
-                        className="text-sm sm:text-base md:text-lg font-medium tracking-wider"
+                        className="text-[17px] min-[375px]:text-[19px] sm:text-lg md:text-xl font-bold tracking-tight"
                         style={{
                           writingMode: "vertical-rl",
-                          lineHeight: "1.6",
-                          letterSpacing: "0.05em",
+                          lineHeight: "1.4",
+                          letterSpacing: "-0.02em",
                           textAlign: "left",
                           display: "block",
                           whiteSpace: "pre",
+                          wordBreak: "keep-all",
+                          overflowWrap: "anywhere"
                         }}
                       >
                         {formatVerticalText(selectedChoice.hiragana)}
