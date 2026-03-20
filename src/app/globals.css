@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Zen Maru Gothic', sans-serif;
+  --color-sky: #89c3eb;
+  --color-karecha: #d6c6af;
+  --color-mizu: #ebf6f7;
+  --color-indigo-navy: #1c305c;
+  --color-ivory: #ede4cd;
+  --color-border-thin: #e0e0e0;
+}
+
+:root {
+  --background-top: #c1e4e9;
+  --background-mid: #ffffff;
+  --background-bottom: #f6bfbc;
+  --foreground: var(--color-indigo-navy);
+}
+
+* {
+  font-family: 'Zen Maru Gothic', sans-serif !important;
+}
+
+body {
+  /* 3色グラデーションの適用 */
+  background: linear-gradient(to bottom, var(--background-top) 20%, var(--background-mid) 50%, var(--background-bottom) 90%);
+
+  /* 和紙テクスチャをグラデーションの上に重ねる */
+  background-image:
+    url("https://www.transparenttextures.com/patterns/natural-paper.png"),
+    linear-gradient(to bottom, var(--background-top) 20%, var(--background-mid) 50%, var(--background-bottom) 90%);
+
+  color: var(--foreground);
+  min-height: 100vh;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.03;
+  pointer-events: none;
+  background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+  z-index: 1;
+}
+
+@layer base {
+  button {
+    @apply transition-all duration-200 border-border-thin cursor-pointer;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
