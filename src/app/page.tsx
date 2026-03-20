@@ -711,7 +711,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center px-4 pt-10 pb-20 md:p-12 md:pt-20 relative z-10 text-center">
+    <main className="flex min-h-screen flex-col items-center px-4 pt-6 pb-12 md:p-8 md:pt-10 relative z-10 text-center">
       {/* ゲームタイトル */}
       <div className="flex flex-col items-center mb-4">
         <div className="border-t-2 border-b-2 border-white/30 py-2 px-6">
@@ -765,7 +765,7 @@ export default function Home() {
                         e.stopPropagation();
                         setActivePopoverId(activePopoverId === startId ? null : startId);
                       }}
-                      className="w-full rounded-xl bg-white/80 px-2 py-4 text-lg font-bold text-[#1c305c] hover:bg-[#c1e4e9]/30 shadow-sm border border-white transition-all transform active:scale-95"
+                      className="w-full rounded-xl bg-white/80 px-2 py-3 text-lg font-bold text-[#1c305c] hover:bg-[#c1e4e9]/30 shadow-sm border border-white transition-all transform active:scale-95"
                     >
                       {startId}-{startId + 9}
                     </button>
@@ -808,7 +808,7 @@ export default function Home() {
                 <button
                   key={i}
                   onClick={() => selectMusicDetail(i + 1)}
-                  className="rounded-2xl bg-white px-4 py-8 text-xl font-bold text-[#1c305c] hover:bg-[#c1e4e9]/30 shadow-sm border border-white"
+                  className="rounded-2xl bg-white px-4 py-5 text-xl font-bold text-[#1c305c] hover:bg-[#c1e4e9]/30 shadow-sm border border-white"
                 >
                   <span className="block text-sm opacity-40 mb-1">music {i + 1}</span>
                   {i * 10 + 1}-{i * 10 + 10} 首
@@ -932,11 +932,11 @@ export default function Home() {
               ✕
             </button>
 
-            <div className="flex flex-col items-center w-full text-[#1c305c] mb-10">
-              <div className="text-xs md:text-sm text-[#1c305c]/60 mb-6 tracking-widest font-normal">
+            <div className="flex flex-col items-center w-full text-[#1c305c] mb-6">
+              <div className="text-xs md:text-sm text-[#1c305c]/60 mb-2 tracking-widest font-normal">
                 第 {currentPoem.id} 首
               </div>
-              <div className="flex flex-col items-center gap-6 w-full overflow-hidden">
+              <div className="flex flex-col items-center gap-2 w-full overflow-hidden">
                 <p 
                   className="text-lg sm:text-xl md:text-2xl font-bold font-serif whitespace-nowrap text-center w-full"
                 >
@@ -951,14 +951,14 @@ export default function Home() {
                 )}
               </div>
               {gameState === "RESULT" && (
-                <p className="text-[10px] md:text-xs text-[#1c305c]/50 animate-fade-in font-normal mt-6">
+                <p className="text-base text-[#1c305c]/50 animate-fade-in font-normal mt-3">
                   作者：{currentPoem.author}
                 </p>
               )}
             </div>
 
             {gameState === "CHOICE" && (
-              <div className="mt-8 grid grid-cols-2 gap-4 w-full max-w-[320px] mx-auto px-2">
+              <div className="mt-4 grid grid-cols-2 gap-4 w-full max-w-[320px] mx-auto px-2">
                 {choices.map((choice, index) => {
                   const displayText = formatCardText(choice.hiragana);
                   return (
@@ -1014,7 +1014,7 @@ export default function Home() {
                     })()}
                   </div>
                 )}
-                <div className="w-full flex flex-col gap-4 items-center text-center mt-6 mb-8">
+                <div className="w-full flex flex-col gap-4 items-center text-center mt-4 mb-6">
                   {remainingPoemIds.length > 0 ? (
                     <button
                       onClick={nextQuestion}
