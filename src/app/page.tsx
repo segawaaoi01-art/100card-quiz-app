@@ -411,23 +411,28 @@ No.100
 宮中の古びた軒先に生えた忍ぶ草を見て、偲んでも偲びきれないのは、昔の良い時代のことだよ。` }
 ];
 
-const formatVerticalText = (text: string) => {
+/**
+ * 札（取札）用のテキスト整形：5文字ずつで区切り、枠内に収める
+ */
+const formatCardText = (text: string) => {
   const noSpace = text.replace(/[\s　]/g, '');
   const chunks = [];
-
-  // 5文字ずつ切り出す
   for (let i = 0; i < noSpace.length; i += 5) {
     let chunk = noSpace.slice(i, i + 5);
-
-    // 次のループの先頭を見に行き、それがもし1文字だけなら今の塊に連結する
     if (noSpace.slice(i + 5, i + 6).length > 0 && noSpace.slice(i + 5).length === 1) {
       chunk += noSpace.slice(i + 5);
-      i += 1; // 1文字分インデックスを進める
+      i += 1;
     }
     chunks.push(chunk);
   }
-
   return chunks.join('\n');
+};
+
+/**
+ * 雅な表示（上の句・答え）用のテキスト整形：1本に繋げる（空白削除）
+ */
+const formatPoemText = (text: string) => {
+  return text.trim().replace(/[\s　]+/g, '');
 };
 
 type GameState = "TOP" | "COUNTDOWN" | "CHOICE" | "RESULT" | "MUSIC_SELECT" | "MUSIC_DETAIL";
@@ -927,76 +932,86 @@ export default function Home() {
               ✕
             </button>
 
-            <div className="text-2xl md:text-3xl text-center leading-relaxed font-bold mb-2 text-[#1c305c]">
-              <div className="text-sm md:text-base text-[#1c305c]/60 mb-2 tracking-widest font-normal">
+            <div className="flex flex-col items-center w-full text-[#1c305c] mb-1">
+              <div className="text-xs md:text-sm text-[#1c305c]/60 mb-1 tracking-widest font-normal">
                 第 {currentPoem.id} 首
               </div>
-              <p className="mb-2">{currentPoem.kamiNoKu}</p>
-              {gameState === "RESULT" && (
-                <>
-                  <p className="text-[#89c3eb] animate-fade-in mt-4 mb-2">{currentPoem.shimoNoKu}</p>
-                  <p className="text-sm md:text-base text-[#1c305c]/50 animate-fade-in font-normal">
-                    作者：{currentPoem.author}
+              <div className="flex flex-col items-center gap-1 w-full overflow-hidden">
+                <p 
+                  className="text-base sm:text-lg md:text-xl font-bold font-serif whitespace-nowrap text-center w-full"
+                >
+                  {formatPoemText(currentPoem.kamiNoKu)}
+                </p>
+                {gameState === "RESULT" && (
+                  <p 
+                    className="text-base sm:text-lg md:text-xl font-bold font-serif whitespace-nowrap text-[#89c3eb] animate-fade-in text-center w-full"
+                  >
+                    {formatPoemText(currentPoem.shimoNoKu)}
                   </p>
-                </>
+                )}
+              </div>
+              {gameState === "RESULT" && (
+                <p className="text-[10px] md:text-xs text-[#1c305c]/50 animate-fade-in font-normal mt-2">
+                  作者：{currentPoem.author}
+                </p>
               )}
             </div>
 
             {gameState === "CHOICE" && (
-              <div className="mt-2 grid grid-cols-2 gap-2 w-full max-w-sm mx-auto px-1">
-                {choices.map((choice, index) => (
-                  <button
-                    key={index}
-                    disabled={choice.disabled}
-                    onClick={() => handleChoice(choice.text, choice.hiragana)}
-                    className={`rounded-2xl transition-all shadow-md border border-[#333]/10 overflow-hidden aspect-square flex flex-col justify-center items-center p-1 sm:p-2 relative ${choice.disabled
-                      ? "bg-gray-100 text-gray-300 cursor-not-allowed opacity-50 border-transparent shadow-none"
-                      : "bg-white text-[#333] hover:bg-[#fdeff2] active:scale-95 active:bg-gray-50 hover:shadow-lg"
-                      }`}
-                  >
-                    <span
-                      className="text-[17px] min-[375px]:text-[19px] sm:text-lg md:text-xl font-normal tracking-tight"
-                      style={{
-                        writingMode: "vertical-rl",
-                        lineHeight: "1.4",
-                        letterSpacing: "-0.02em",
-                        textAlign: "left",
-                        display: "block",
-                        whiteSpace: "pre",
-                        wordBreak: "keep-all",
-                        overflowWrap: "anywhere"
-                      }}
+              <div className="mt-1 grid grid-cols-2 gap-2 w-full max-w-sm mx-auto px-1">
+                {choices.map((choice, index) => {
+                  const displayText = formatCardText(choice.hiragana);
+                  return (
+                    <button
+                      key={index}
+                      disabled={choice.disabled}
+                      onClick={() => handleChoice(choice.text, choice.hiragana)}
+                      className={`rounded-2xl transition-all shadow-md border border-[#333]/10 overflow-hidden aspect-square flex flex-col justify-center items-center p-2 relative ${choice.disabled
+                        ? "bg-gray-100 text-gray-300 cursor-not-allowed opacity-50 border-transparent shadow-none"
+                        : "bg-white text-[#333] hover:bg-[#fdeff2] active:scale-95 active:bg-gray-50 hover:shadow-lg"
+                        }`}
                     >
-                      {formatVerticalText(choice.hiragana)}
-                    </span>
-                  </button>
-                ))}
+                      <span
+                        className="font-serif font-light text-base sm:text-lg leading-snug tracking-normal"
+                        style={{
+                          writingMode: "vertical-rl",
+                          textAlign: "left",
+                          display: "block",
+                          whiteSpace: "pre-line",
+                        }}
+                      >
+                        {displayText}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
             )}
 
             {gameState === "RESULT" && (
               <div className="w-full flex flex-col items-center">
                 {selectedChoice && (
-                  <div className="mb-6 flex justify-center w-full">
-                    <div
-                      className="rounded-2xl shadow-md border border-[#333]/10 bg-white text-[#333] overflow-hidden aspect-square flex flex-col justify-center items-center p-2 w-full max-w-[180px]"
-                    >
-                      <span
-                        className="text-[17px] min-[375px]:text-[19px] sm:text-lg md:text-xl font-normal tracking-tight"
-                        style={{
-                          writingMode: "vertical-rl",
-                          lineHeight: "1.4",
-                          letterSpacing: "-0.02em",
-                          textAlign: "left",
-                          display: "block",
-                          whiteSpace: "pre",
-                          wordBreak: "keep-all",
-                          overflowWrap: "anywhere"
-                        }}
-                      >
-                        {formatVerticalText(selectedChoice.hiragana)}
-                      </span>
-                    </div>
+                  <div className="mb-4 flex justify-center w-full">
+                    {(() => {
+                      const displayText = formatCardText(selectedChoice.hiragana);
+                      return (
+                        <div
+                          className="rounded-2xl shadow-md border border-[#333]/10 bg-white text-[#333] overflow-hidden aspect-square flex flex-col justify-center items-center p-3 w-full max-w-[170px]"
+                        >
+                          <span
+                            className="font-serif font-light text-base sm:text-lg leading-snug tracking-normal"
+                            style={{
+                              writingMode: "vertical-rl",
+                              textAlign: "left",
+                              display: "block",
+                              whiteSpace: "pre-line",
+                            }}
+                          >
+                            {displayText}
+                          </span>
+                        </div>
+                      );
+                    })()}
                   </div>
                 )}
                 <div className="w-full flex flex-col gap-4 items-center text-center">
