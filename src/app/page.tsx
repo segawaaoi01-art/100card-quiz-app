@@ -706,9 +706,9 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center px-4 py-8 md:p-6 md:pt-12 relative z-10">
+    <main className="flex min-h-screen flex-col items-center px-4 py-4 md:p-6 md:pt-12 relative z-10">
       {/* ゲームタイトル */}
-      <div className="flex flex-col items-center mb-8">
+      <div className="flex flex-col items-center mb-4">
         <div className="border-t-2 border-b-2 border-white/30 py-2 px-6">
           <h1 className="text-xl md:text-2xl font-bold tracking-widest text-[#f8fbf8] drop-shadow-sm text-center">
             曲で覚える百人一首
@@ -918,7 +918,7 @@ export default function Home() {
         )}
 
         {(gameState === "CHOICE" || gameState === "RESULT") && currentPoem && (
-          <div className="flex flex-col items-center w-full bg-white/60 p-10 md:p-12 rounded-3xl backdrop-blur-sm animate-fade-in relative shadow-sm border border-white">
+          <div className="flex flex-col items-center w-full bg-white/60 p-6 md:p-12 rounded-3xl backdrop-blur-sm animate-fade-in relative shadow-sm border border-white">
             <button
               onClick={handleGoTop}
               className="absolute top-[10px] right-[10px] text-2xl text-[#1c305c]/30 hover:text-[#1c305c] transition-colors z-50 font-bold"
@@ -927,14 +927,14 @@ export default function Home() {
               ✕
             </button>
 
-            <div className="text-2xl md:text-3xl text-center leading-relaxed font-bold mb-4 text-[#1c305c]">
-              <div className="text-sm md:text-base text-[#1c305c]/60 mb-6 tracking-widest font-normal">
+            <div className="text-2xl md:text-3xl text-center leading-relaxed font-bold mb-2 text-[#1c305c]">
+              <div className="text-sm md:text-base text-[#1c305c]/60 mb-2 tracking-widest font-normal">
                 第 {currentPoem.id} 首
               </div>
-              <p className="mb-4">{currentPoem.kamiNoKu}</p>
+              <p className="mb-2">{currentPoem.kamiNoKu}</p>
               {gameState === "RESULT" && (
                 <>
-                  <p className="text-[#89c3eb] animate-fade-in mt-6 mb-4">{currentPoem.shimoNoKu}</p>
+                  <p className="text-[#89c3eb] animate-fade-in mt-4 mb-2">{currentPoem.shimoNoKu}</p>
                   <p className="text-sm md:text-base text-[#1c305c]/50 animate-fade-in font-normal">
                     作者：{currentPoem.author}
                   </p>
@@ -943,7 +943,7 @@ export default function Home() {
             </div>
 
             {gameState === "CHOICE" && (
-              <div className="mt-4 grid grid-cols-2 gap-2 w-full max-w-sm mx-auto px-1">
+              <div className="mt-2 grid grid-cols-2 gap-2 w-full max-w-sm mx-auto px-1">
                 {choices.map((choice, index) => (
                   <button
                     key={index}
@@ -955,7 +955,7 @@ export default function Home() {
                       }`}
                   >
                     <span
-                      className="text-[17px] min-[375px]:text-[19px] sm:text-lg md:text-xl font-bold tracking-tight"
+                      className="text-[17px] min-[375px]:text-[19px] sm:text-lg md:text-xl font-normal tracking-tight"
                       style={{
                         writingMode: "vertical-rl",
                         lineHeight: "1.4",
@@ -977,12 +977,12 @@ export default function Home() {
             {gameState === "RESULT" && (
               <div className="w-full flex flex-col items-center">
                 {selectedChoice && (
-                  <div className="mb-8 flex justify-center w-full">
+                  <div className="mb-6 flex justify-center w-full">
                     <div
                       className="rounded-2xl shadow-md border border-[#333]/10 bg-white text-[#333] overflow-hidden aspect-square flex flex-col justify-center items-center p-2 w-full max-w-[180px]"
                     >
                       <span
-                        className="text-[17px] min-[375px]:text-[19px] sm:text-lg md:text-xl font-bold tracking-tight"
+                        className="text-[17px] min-[375px]:text-[19px] sm:text-lg md:text-xl font-normal tracking-tight"
                         style={{
                           writingMode: "vertical-rl",
                           lineHeight: "1.4",
