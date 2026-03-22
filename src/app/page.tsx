@@ -919,7 +919,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="w-full flex flex-col gap-8 max-h-[50vh] overflow-y-auto pr-2 mb-8 bg-white/60 px-10 py-8 rounded-xl text-[#1c305c] leading-relaxed whitespace-pre-wrap text-left shadow-[0_4px_15px_rgba(0,0,0,0.05)] border border-white/20">
+            <div className="w-full flex flex-col gap-8 max-h-[50vh] overflow-y-auto pr-2 mb-8 bg-white/60 pl-10 pr-16 py-8 rounded-xl text-[#1c305c] leading-relaxed whitespace-pre-wrap text-left shadow-[0_4px_15px_rgba(0,0,0,0.05)] border border-white/20">
               {selectedMusicIndex ? lyricsData.find(d => d.id === selectedMusicIndex)?.text : ""}
             </div>
           </div>
@@ -949,21 +949,19 @@ export default function Home() {
               <div className="text-xs md:text-sm text-[#1c305c]/60 mb-2 tracking-widest font-normal">
                 第 {currentPoem.id} 首
               </div>
-              <div className="w-[90%] mx-auto overflow-hidden">
-                <div className="flex flex-col items-center gap-2 w-full [container-type:inline-size] px-6">
+              <div className="block mx-auto text-center w-auto max-w-[90%] overflow-hidden px-6">
+                <p
+                  className="text-[clamp(1rem,4.2vw,1.5rem)] sm:text-2xl font-bold font-serif whitespace-nowrap text-center w-full"
+                >
+                  {formatPoemText(currentPoem.kamiNoKu)}
+                </p>
+                {gameState === "RESULT" && (
                   <p
-                    className="text-[clamp(1.125rem,4.6cqw,1.75rem)] sm:text-2xl font-bold font-serif whitespace-nowrap text-center w-full"
+                    className="text-[clamp(1rem,4.2vw,1.5rem)] sm:text-2xl font-bold font-serif whitespace-nowrap text-[#89c3eb] animate-fade-in text-center w-full"
                   >
-                    {formatPoemText(currentPoem.kamiNoKu)}
+                    {formatPoemText(currentPoem.shimoNoKu)}
                   </p>
-                  {gameState === "RESULT" && (
-                    <p
-                      className="text-[clamp(1.125rem,4.6cqw,1.75rem)] sm:text-2xl font-bold font-serif whitespace-nowrap text-[#89c3eb] animate-fade-in text-center w-full"
-                    >
-                      {formatPoemText(currentPoem.shimoNoKu)}
-                    </p>
-                  )}
-                </div>
+                )}
               </div>
               {gameState === "RESULT" && (
                 <p className="text-base text-[#1c305c]/50 animate-fade-in font-normal mt-3">
