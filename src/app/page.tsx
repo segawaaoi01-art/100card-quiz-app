@@ -430,10 +430,9 @@ const formatCardText = (text: string) => {
 
 const formatPoemText = (text: string) => {
   const parts = text.trim().split(/[\s　]+/);
-  const charsWithoutSpaces = parts.join("").length;
 
-  // 16文字以上かつスペースがある場合は、バランスを考慮して2行に改行（スマホのみ）
-  if (charsWithoutSpaces >= 16 && parts.length >= 2) {
+  // スペースがある場合は、常にバランスを考慮して2行に強制改行（スマホのみ）
+  if (parts.length >= 2) {
     let splitIndex = 1;
     if (parts.length === 3) {
       // 五・七・五のどこで切るか「バランス」で判定
@@ -449,7 +448,6 @@ const formatPoemText = (text: string) => {
       </>
     );
   }
-  // 短文または1行表示。スペースをNBSPに置換して nowrap を徹底
   return parts.join("\u00A0");
 };
 
@@ -967,15 +965,15 @@ export default function Home() {
               <div className="text-xs md:text-sm text-[#1c305c]/60 mb-2 tracking-widest font-normal">
                 第 {currentPoem.id} 首
               </div>
-              <div className="w-full flex flex-col items-center gap-2 px-6 overflow-hidden min-h-[4.5rem] justify-center">
+              <div className="w-full flex flex-col items-center gap-1.5 px-4 overflow-hidden min-h-[4rem] justify-center">
                 <p
-                  className="text-xl sm:text-2xl font-bold font-serif text-center max-w-full leading-snug whitespace-nowrap"
+                  className="text-[1.2rem] sm:text-2xl font-bold font-serif text-center max-w-full leading-snug whitespace-pre-wrap block"
                 >
                   {formatPoemText(currentPoem.kamiNoKu)}
                 </p>
                 {gameState === "RESULT" && (
                   <p
-                    className="text-xl sm:text-2xl font-bold font-serif text-[#89c3eb] animate-fade-in text-center max-w-full leading-snug mt-1 whitespace-nowrap"
+                    className="text-[1.2rem] sm:text-2xl font-bold font-serif text-[#89c3eb] animate-fade-in text-center max-w-full leading-snug mt-1 whitespace-pre-wrap block"
                   >
                     {formatPoemText(currentPoem.shimoNoKu)}
                   </p>
