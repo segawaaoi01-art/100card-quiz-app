@@ -429,10 +429,24 @@ const formatCardText = (text: string) => {
 };
 
 /**
- * 雅な表示（上の句・答え）用のテキスト整形：1本に繋げる（空白削除）
+ * 雅な表示（上の句・答え）用のテキスト整形：16字以上の場合は最初の句切れで改行
  */
 const formatPoemText = (text: string) => {
-  return text.trim().replace(/[\s　]+/g, '');
+  const charsWithoutSpaces = text.replace(/[\s　]+/g, "").length;
+  // 16文字以上なら最初のスペースで改行（スマホのみ）
+  if (charsWithoutSpaces >= 16) {
+    const parts = text.trim().split(/[\s　]+/);
+    if (parts.length > 1) {
+      return (
+        <>
+          {parts[0]}
+          <br className="sm:hidden" />
+          {parts.slice(1).join("\u00A0")}
+        </>
+      );
+    }
+  }
+  return text.trim().replace(/[\s　]+/g, "\u00A0");
 };
 
 type GameState = "TOP" | "COUNTDOWN" | "CHOICE" | "RESULT" | "MUSIC_SELECT" | "MUSIC_DETAIL";
@@ -949,15 +963,15 @@ export default function Home() {
               <div className="text-xs md:text-sm text-[#1c305c]/60 mb-2 tracking-widest font-normal">
                 第 {currentPoem.id} 首
               </div>
-              <div className="w-full flex flex-col items-center gap-2 px-6 overflow-hidden">
+              <div className="w-full flex flex-col items-center gap-2 px-6 overflow-hidden min-h-[4.5rem] justify-center">
                 <p
-                  className="text-[clamp(1rem,4.5vw,1.5rem)] sm:text-2xl font-bold font-serif whitespace-nowrap text-center max-w-full overflow-hidden"
+                  className="text-xl sm:text-2xl font-bold font-serif text-center max-w-full leading-snug"
                 >
                   {formatPoemText(currentPoem.kamiNoKu)}
                 </p>
                 {gameState === "RESULT" && (
                   <p
-                    className="text-[clamp(1rem,4.5vw,1.5rem)] sm:text-2xl font-bold font-serif whitespace-nowrap text-[#89c3eb] animate-fade-in text-center max-w-full overflow-hidden"
+                    className="text-xl sm:text-2xl font-bold font-serif text-[#89c3eb] animate-fade-in text-center max-w-full leading-snug mt-1"
                   >
                     {formatPoemText(currentPoem.shimoNoKu)}
                   </p>
