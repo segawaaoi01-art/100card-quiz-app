@@ -951,13 +951,13 @@ export default function Home() {
               </div>
               <div className="w-full flex flex-col items-center gap-2 px-6 overflow-hidden">
                 <p
-                  className="text-[clamp(1rem,4.2vw,1.5rem)] sm:text-2xl font-bold font-serif whitespace-nowrap text-center max-w-full overflow-hidden"
+                  className="text-[clamp(1rem,4.5vw,1.5rem)] sm:text-2xl font-bold font-serif whitespace-nowrap text-center max-w-full overflow-hidden"
                 >
                   {formatPoemText(currentPoem.kamiNoKu)}
                 </p>
                 {gameState === "RESULT" && (
                   <p
-                    className="text-[clamp(1rem,4.2vw,1.5rem)] sm:text-2xl font-bold font-serif whitespace-nowrap text-[#89c3eb] animate-fade-in text-center max-w-full overflow-hidden"
+                    className="text-[clamp(1rem,4.5vw,1.5rem)] sm:text-2xl font-bold font-serif whitespace-nowrap text-[#89c3eb] animate-fade-in text-center max-w-full overflow-hidden"
                   >
                     {formatPoemText(currentPoem.shimoNoKu)}
                   </p>
@@ -971,7 +971,7 @@ export default function Home() {
             </div>
 
             {gameState === "CHOICE" && (
-              <div className="mt-10 grid grid-cols-2 gap-4 w-full max-w-[320px] mx-auto px-2">
+              <div className="mt-8 grid grid-cols-2 gap-4 w-full max-w-[320px] mx-auto px-2">
                 {choices.map((choice, index) => {
                   const displayText = formatCardText(choice.hiragana);
                   return (
