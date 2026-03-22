@@ -429,35 +429,28 @@ const formatCardText = (text: string) => {
 };
 
 const formatPoemText = (text: string) => {
-  const charsWithoutSpaces = text.replace(/[\s　]+/g, "").length;
-  // 16文字以上なら雅な2行改行（スマホのみ）
-  if (charsWithoutSpaces >= 16) {
-    const parts = text.trim().split(/[\s　]+/);
+  const parts = text.trim().split(/[\s　]+/);
+  const charsWithoutSpaces = parts.join("").length;
+
+  // 16文字以上かつスペースがある場合は、バランスを考慮して2行に改行（スマホのみ）
+  if (charsWithoutSpaces >= 16 && parts.length >= 2) {
+    let splitIndex = 1;
     if (parts.length === 3) {
       // 五・七・五のどこで切るか「バランス」で判定
-      // 1番目と2番目の後のどちらがより文字数差が少ないか
       const diff1 = Math.abs(parts[0].length - (parts[1].length + parts[2].length));
       const diff2 = Math.abs((parts[0].length + parts[1].length) - parts[2].length);
-
-      const splitIndex = diff2 < diff1 ? 2 : 1;
-      return (
-        <>
-          {parts.slice(0, splitIndex).join("\u00A0")}
-          <br className="sm:hidden" />
-          {parts.slice(splitIndex).join("\u00A0")}
-        </>
-      );
-    } else if (parts.length === 2) {
-      return (
-        <>
-          {parts[0]}
-          <br className="sm:hidden" />
-          {parts[1]}
-        </>
-      );
+      splitIndex = diff2 < diff1 ? 2 : 1;
     }
+    return (
+      <>
+        {parts.slice(0, splitIndex).join("\u00A0")}
+        <br className="sm:hidden" />
+        {parts.slice(splitIndex).join("\u00A0")}
+      </>
+    );
   }
-  return text.trim().replace(/[\s　]+/g, "\u00A0");
+  // 短文または1行表示。スペースをNBSPに置換して nowrap を徹底
+  return parts.join("\u00A0");
 };
 
 type GameState = "TOP" | "COUNTDOWN" | "CHOICE" | "RESULT" | "MUSIC_SELECT" | "MUSIC_DETAIL";
@@ -976,13 +969,13 @@ export default function Home() {
               </div>
               <div className="w-full flex flex-col items-center gap-2 px-6 overflow-hidden min-h-[4.5rem] justify-center">
                 <p
-                  className="text-xl sm:text-2xl font-bold font-serif text-center max-w-full leading-snug"
+                  className="text-xl sm:text-2xl font-bold font-serif text-center max-w-full leading-snug whitespace-nowrap"
                 >
                   {formatPoemText(currentPoem.kamiNoKu)}
                 </p>
                 {gameState === "RESULT" && (
                   <p
-                    className="text-xl sm:text-2xl font-bold font-serif text-[#89c3eb] animate-fade-in text-center max-w-full leading-snug mt-1"
+                    className="text-xl sm:text-2xl font-bold font-serif text-[#89c3eb] animate-fade-in text-center max-w-full leading-snug mt-1 whitespace-nowrap"
                   >
                     {formatPoemText(currentPoem.shimoNoKu)}
                   </p>
