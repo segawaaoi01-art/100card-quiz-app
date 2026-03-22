@@ -23,6 +23,11 @@
   font-family: 'Zen Maru Gothic', sans-serif !important;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   /* 3色グラデーションの適用 */
   background: linear-gradient(to bottom, var(--background-top) 20%, var(--background-mid) 50%, var(--background-bottom) 90%);
