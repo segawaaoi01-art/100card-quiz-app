@@ -949,19 +949,21 @@ export default function Home() {
               <div className="text-xs md:text-sm text-[#1c305c]/60 mb-2 tracking-widest font-normal">
                 第 {currentPoem.id} 首
               </div>
-              <div className="flex flex-col items-center gap-2 w-full max-w-[92vw] overflow-hidden [container-type:inline-size] px-4">
-                <p
-                  className="text-[clamp(1rem,5cqw,1.5rem)] sm:text-xl md:text-2xl font-bold font-serif whitespace-nowrap text-center w-full"
-                >
-                  {formatPoemText(currentPoem.kamiNoKu)}
-                </p>
-                {gameState === "RESULT" && (
+              <div className="w-full max-w-full px-6 overflow-hidden">
+                <div className="flex flex-col items-center gap-2 w-full [container-type:inline-size]">
                   <p
-                    className="text-[clamp(1rem,5cqw,1.5rem)] sm:text-xl md:text-2xl font-bold font-serif whitespace-nowrap text-[#89c3eb] animate-fade-in text-center w-full"
+                    className="text-[clamp(1rem,5.5cqw,1.5rem)] sm:text-2xl font-bold font-serif whitespace-nowrap text-center w-full"
                   >
-                    {formatPoemText(currentPoem.shimoNoKu)}
+                    {formatPoemText(currentPoem.kamiNoKu)}
                   </p>
-                )}
+                  {gameState === "RESULT" && (
+                    <p
+                      className="text-[clamp(1rem,5.5cqw,1.5rem)] sm:text-2xl font-bold font-serif whitespace-nowrap text-[#89c3eb] animate-fade-in text-center w-full"
+                    >
+                      {formatPoemText(currentPoem.shimoNoKu)}
+                    </p>
+                  )}
+                </div>
               </div>
               {gameState === "RESULT" && (
                 <p className="text-base text-[#1c305c]/50 animate-fade-in font-normal mt-3">
