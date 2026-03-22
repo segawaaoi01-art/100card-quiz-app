@@ -935,7 +935,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="w-full flex flex-col gap-8 max-h-[50vh] overflow-y-auto pr-2 mb-8 bg-white/60 pl-10 pr-12 py-8 rounded-xl text-[#1c305c] leading-relaxed whitespace-pre-wrap text-left shadow-[0_4px_15px_rgba(0,0,0,0.05)] border border-white/20">
+            <div className="w-full flex flex-col gap-8 max-h-[50vh] overflow-y-auto pr-2 mb-8 bg-white/60 px-[0.8rem] py-8 rounded-xl text-[#1c305c] leading-relaxed whitespace-pre-wrap text-left shadow-[0_4px_15px_rgba(0,0,0,0.05)] border border-white/20 tracking-[-0.01em]">
               {selectedMusicIndex ? lyricsData.find(d => d.id === selectedMusicIndex)?.text : ""}
             </div>
           </div>
