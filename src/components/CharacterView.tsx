@@ -45,7 +45,7 @@ export default function CharacterView({ type = "top", customMessage, trigger }: 
             <div className="flex-1">
                 <div className="relative bg-[#d3ccd6] rounded-2xl px-4 py-3 shadow-sm min-h-[50px] flex items-center">
                     <p
-                        className="text-white text-sm font-medium leading-relaxed"
+                        className="text-white text-sm font-medium leading-relaxed text-left"
                         style={{ textShadow: '1px 1px 2px rgba(0, 0, 0, 0.2)' }}
                     >
                         {message}

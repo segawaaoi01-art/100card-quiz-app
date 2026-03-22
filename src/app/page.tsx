@@ -428,20 +428,31 @@ const formatCardText = (text: string) => {
   return chunks.join('\n');
 };
 
-/**
- * 雅な表示（上の句・答え）用のテキスト整形：16字以上の場合は最初の句切れで改行
- */
 const formatPoemText = (text: string) => {
   const charsWithoutSpaces = text.replace(/[\s　]+/g, "").length;
-  // 16文字以上なら最初のスペースで改行（スマホのみ）
+  // 16文字以上なら雅な2行改行（スマホのみ）
   if (charsWithoutSpaces >= 16) {
     const parts = text.trim().split(/[\s　]+/);
-    if (parts.length > 1) {
+    if (parts.length === 3) {
+      // 五・七・五のどこで切るか「バランス」で判定
+      // 1番目と2番目の後のどちらがより文字数差が少ないか
+      const diff1 = Math.abs(parts[0].length - (parts[1].length + parts[2].length));
+      const diff2 = Math.abs((parts[0].length + parts[1].length) - parts[2].length);
+
+      const splitIndex = diff2 < diff1 ? 2 : 1;
+      return (
+        <>
+          {parts.slice(0, splitIndex).join("\u00A0")}
+          <br className="sm:hidden" />
+          {parts.slice(splitIndex).join("\u00A0")}
+        </>
+      );
+    } else if (parts.length === 2) {
       return (
         <>
           {parts[0]}
           <br className="sm:hidden" />
-          {parts.slice(1).join("\u00A0")}
+          {parts[1]}
         </>
       );
     }
@@ -959,7 +970,7 @@ export default function Home() {
               ✕
             </button>
 
-            <div className="flex flex-col items-center w-full text-[#1c305c] mb-6">
+            <div className="flex flex-col items-center w-full text-[#1c305c] mb-2">
               <div className="text-xs md:text-sm text-[#1c305c]/60 mb-2 tracking-widest font-normal">
                 第 {currentPoem.id} 首
               </div>
@@ -985,7 +996,7 @@ export default function Home() {
             </div>
 
             {gameState === "CHOICE" && (
-              <div className="mt-8 grid grid-cols-2 gap-4 w-full max-w-[320px] mx-auto px-2">
+              <div className="mt-4 grid grid-cols-2 gap-4 w-full max-w-[320px] mx-auto px-2">
                 {choices.map((choice, index) => {
                   const displayText = formatCardText(choice.hiragana);
                   return (
