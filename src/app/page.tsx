@@ -935,7 +935,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="w-full flex flex-col gap-8 max-h-[50vh] overflow-y-auto pr-2 mb-8 bg-white/60 px-[0.8rem] py-8 rounded-xl text-[#1c305c] leading-relaxed whitespace-pre-wrap text-left shadow-[0_4px_15px_rgba(0,0,0,0.05)] border border-white/20 tracking-[-0.01em]">
+            <div className="w-full flex flex-col gap-8 max-h-[50vh] overflow-y-auto pr-2 mb-8 bg-white/60 px-[1.3rem] py-8 rounded-xl text-[#1c305c] leading-relaxed whitespace-pre-wrap text-left shadow-[0_4px_15px_rgba(0,0,0,0.05)] border border-white/20 tracking-[-0.02em]">
               {selectedMusicIndex ? lyricsData.find(d => d.id === selectedMusicIndex)?.text : ""}
             </div>
           </div>
@@ -965,15 +965,15 @@ export default function Home() {
               <div className="text-xs md:text-sm text-[#1c305c]/60 mb-2 tracking-widest font-normal">
                 第 {currentPoem.id} 首
               </div>
-              <div className="w-full flex flex-col items-center gap-1.5 px-4 overflow-hidden min-h-[4rem] justify-center">
+              <div className="w-full flex flex-col items-center gap-1.5 px-4 overflow-hidden max-h-[120px] justify-center">
                 <p
-                  className="text-[1.2rem] sm:text-2xl font-bold font-serif text-center max-w-full leading-snug whitespace-pre-wrap block"
+                  className="question-text font-bold font-serif text-center max-w-full whitespace-pre-wrap block"
                 >
                   {formatPoemText(currentPoem.kamiNoKu)}
                 </p>
                 {gameState === "RESULT" && (
                   <p
-                    className="text-[1.2rem] sm:text-2xl font-bold font-serif text-[#89c3eb] animate-fade-in text-center max-w-full leading-snug mt-1 whitespace-pre-wrap block"
+                    className="question-text font-bold font-serif text-[#89c3eb] animate-fade-in text-center max-w-full whitespace-pre-wrap block"
                   >
                     {formatPoemText(currentPoem.shimoNoKu)}
                   </p>

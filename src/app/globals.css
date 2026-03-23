@@ -28,6 +28,19 @@ html {
   text-size-adjust: 100%;
 }
 
+.question-text {
+  -webkit-text-size-adjust: none !important;
+  text-size-adjust: none !important;
+  line-height: 1.2 !important;
+  font-size: min(1.25rem, 4.5vw) !important;
+}
+
+@media (min-width: 640px) {
+  .question-text {
+    font-size: 1.5rem !important; /* 24px equivalent */
+  }
+}
+
 body {
   /* 3色グラデーションの適用 */
   background: linear-gradient(to bottom, var(--background-top) 20%, var(--background-mid) 50%, var(--background-bottom) 90%);
