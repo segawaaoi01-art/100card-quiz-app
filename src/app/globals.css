@@ -32,12 +32,12 @@ html {
   -webkit-text-size-adjust: none !important;
   text-size-adjust: none !important;
   line-height: 1.2 !important;
-  font-size: min(1.25rem, 4.5vw) !important;
+  font-size: 1.25rem !important; /* 20px - 雅なサイズ */
 }
 
 @media (min-width: 640px) {
   .question-text {
-    font-size: 1.5rem !important; /* 24px equivalent */
+    font-size: 1.75rem !important; /* 28px - 雅なバランス */
   }
 }
 

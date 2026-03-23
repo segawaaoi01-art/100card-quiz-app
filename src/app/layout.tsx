@@ -11,6 +11,7 @@ const zenMaruGothic = Zen_Maru_Gothic({
 export const metadata: Metadata = {
   title: "百人一首暗記ゲーム | 聞いて覚える",
   description: "日本の伝統美と親しみやすいデザインを融合させた、百人一首の暗記支援アプリです。",
+  manifest: "/manifest.json",
   icons: {
     icon: [
       { url: "/favicon.ico" },
